@@ -1,4 +1,4 @@
-name: Test Solidity VSCode Extension
+name: Test Solidity VSCode Ext
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   test-solidity-extension:
