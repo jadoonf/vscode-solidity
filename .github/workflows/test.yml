@@ -19,9 +19,8 @@ jobs:
         
       - uses: listendev/action@v0.11
         with:
-          jwt: ${{ secrets.LS }}
           ci: only
-         
+          jwt: ${{ secrets.LS }} 
       - name: Install VSCode
         run: |
           # Install required dependencies
