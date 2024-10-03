@@ -1,0 +1,48 @@
+name: Test Solidity VSCode Extension
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-solidity-extension:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install VSCode
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common apt-transport-https
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6A6B4C2D7B5E0D6C
+          sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+          sudo apt-get update
+          sudo apt-get install -y code
+
+      - name: Install Solidity Extension
+        run: |
+          code --install-extension jadoonf.vscode-solidity
+
+      - name: Verify Extension Installation
+        run: |
+          code --list-extensions | grep jadoonf.vscode-solidity
+
+      - name: Run Extension Tests
+        run: |
+          # Assuming there are extension tests available, run them
+          npm install
+          npm test
+
+      - name: Report Success
+        run: echo "VSCode Solidity Extension installed and tests ran successfully."
