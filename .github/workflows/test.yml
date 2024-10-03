@@ -17,20 +17,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
       - name: Install VSCode
         run: |
+          # Install required dependencies
           sudo apt-get update
-          sudo apt-get install -y software-properties-common apt-transport-https
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6A6B4C2D7B5E0D6C
-          sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-          sudo apt-get update
-          sudo apt-get install -y code
+          sudo apt-get install -y software-properties-common apt-transport-https wget gpg
 
+          # Add Microsoft GPG Key and Repository
+          wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+          sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+          sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+          sudo apt-get install -y apt-transport-https
+          sudo apt-get update
+
+          # Install VSCode
+          sudo apt-get install -y code
+          
       - name: Install Solidity Extension
         run: |
           code --install-extension jadoonf.vscode-solidity
