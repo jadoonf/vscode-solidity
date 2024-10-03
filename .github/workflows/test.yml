@@ -20,7 +20,7 @@ jobs:
       - uses: listendev/action@v0.11
         with:
           ci: only
-          jwt: ${{ secrets.LS }} 
+          jwt: ${{ secrets.LSTN }} 
           
       - name: Install VSCode
         run: |
