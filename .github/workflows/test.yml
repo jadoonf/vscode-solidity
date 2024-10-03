@@ -40,11 +40,11 @@ jobs:
           
       - name: Install Solidity Extension
         run: |
-          code --install-extension jadoonf.vscode-solidity
+          code --install-extension JuanBlanco.solidity
 
       - name: Verify Extension Installation
         run: |
-          code --list-extensions | grep jadoonf.vscode-solidity
+          code --list-extensions | grep JuanBlanco.solidity
 
       - name: Run Extension Tests
         run: |
