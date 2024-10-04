@@ -1,56 +1,62 @@
 name: Test Solidity VSCode Ext
-
-on:
-  push:
-    branches:
-      - '*'
+true:
   pull_request:
     branches:
-      - '*'
-  workflow_dispatch:
-
+    - '*'
+  push:
+    branches:
+    - '*'
+  workflow_dispatch: null
 jobs:
   test-solidity-extension:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      - uses: listendev/action@v0.11
-        with:
-          ci: only
-          jwt: ${{ secrets.LSTN }} 
-          
-      - name: Install VSCode
-        run: |
-          # Install required dependencies
-          sudo apt-get update
-          sudo apt-get install -y software-properties-common apt-transport-https wget gpg
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - uses: listendev/action@v0.11
+      with:
+        ci: only
+        jwt: ${{ secrets.LSTN }}
+    - name: Install VSCode
+      run: '# Install required dependencies
 
-          # Add Microsoft GPG Key and Repository
-          wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-          sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-          sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-          sudo apt-get install -y apt-transport-https
-          sudo apt-get update
+        sudo apt-get update
 
-          # Install VSCode
-          sudo apt-get install -y code
-          
-      - name: Install Solidity Extension
-        run: |
-          code --install-extension JuanBlanco.solidity
+        sudo apt-get install -y software-properties-common apt-transport-https wget
+        gpg
 
-      # - name: Verify Extension Installation
-      #   run: |
-      #     code --list-extensions | grep JuanBlanco.solidity
 
-      - name: Run Extension Tests
-        run: |
-          # Assuming there are extension tests available, run them
-          npm install
-          npm test
+        # Add Microsoft GPG Key and Repository
 
-      - name: Report Success
-        run: echo "VSCode Solidity Extension installed and tests ran successfully."
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor
+        > packages.microsoft.gpg
+
+        sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+
+        sudo sh -c ''echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode
+        stable main" > /etc/apt/sources.list.d/vscode.list''
+
+        sudo apt-get install -y apt-transport-https
+
+        sudo apt-get update
+
+
+        # Install VSCode
+
+        sudo apt-get install -y code
+
+        '
+    - name: Install Solidity Extension
+      run: 'code --install-extension JuanBlanco.solidity
+
+        '
+    - name: Run Extension Tests
+      run: '# Assuming there are extension tests available, run them
+
+        npm install
+
+        npm test
+
+        '
+    - name: Report Success
+      run: echo "VSCode Solidity Extension installed and tests ran successfully."
